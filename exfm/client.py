@@ -107,3 +107,24 @@ class ExfmClient(object):
             'password': password_hash
         }
         return self._post("/song/%s/love" % song_id, data)
+
+    def get_loved_on_url(self, url):
+        return self._get("/url/%s/loved" % url)
+
+    def get_trending(self, start=0, results=20):
+        return self._get("/trending", data={'start': start, 'results': results})
+
+    def get_sotd(self):
+        return self._get("/sotd")
+
+    def get_motm(self):
+        return self._get("/motm")
+
+    def get_aotw(self):
+        return self._get("/aotw")
+
+    def get_explore(self, genre=None, start=0, results=20):
+        route = "/explore"
+        if genre:
+            route += "/%s" % genre
+        return self._get(route, data={'start': start, 'results': results})
