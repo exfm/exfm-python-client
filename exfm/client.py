@@ -5,6 +5,7 @@ except ImportError:
 
 import urllib
 import urllib2
+import hashlib
 
 
 class ExfmError(Exception):
@@ -46,6 +47,9 @@ class ExfmClient(object):
             return e.read()
         except urllib2.URLError, e:
             return str(e)
+
+    def hash(self, password):
+        return hashlib.md5(password).hexdigest()
 
     def get_user(self, username):
         return self._get("/user/%s" % username)
@@ -106,7 +110,7 @@ class ExfmClient(object):
             'username': username,
             'password': password_hash
         }
-        return self._post("/song/%s/love" % song_id, data)
+        return self._post("/song/%s/unlove" % song_id, data)
 
     def get_loved_on_url(self, url):
         return self._get("/url/%s/loved" % url)
