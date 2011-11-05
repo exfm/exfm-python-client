@@ -93,8 +93,9 @@ class ExfmClient(object):
     def get_song_graph(self, song_id):
         return self._get("/song/%s/graph" % song_id)
 
-    def love_song(self, username, password_hash, song_id, client_id='exfm_api',
+    def love_song(self, username, password, song_id, client_id='exfm_api',
         context=None, source=None):
+        password_hash = self.hash(password)
         data = {
             'username': username,
             'password': password_hash,
@@ -105,7 +106,8 @@ class ExfmClient(object):
 
         return self._post("/song/%s/love" % song_id, data)
 
-    def unlove_song(self, username, password_hash, song_id):
+    def unlove_song(self, username, password, song_id):
+        password_hash = self.hash(password)
         data = {
             'username': username,
             'password': password_hash

@@ -57,6 +57,8 @@ All methods return a dictionary with the following top-level keys:
 * status_text:  Always 'OK' for successful responses.
 * user, users, song, songs, etc:  The payload of the response, containing a dictionary representation of the object requested or a list of such objects.
 
+### User object
+
 The user profile object has some basic information about the user's profile page:
 
 * background:  Images, colors, and positioning of profile page background.
@@ -123,6 +125,8 @@ Paginated responses have these additional keys:
 * results:  The number of records returned in this response.
 * total:  The total number of records available to this method.
 
+### Song object
+
 Song objects in exfm are really Song-URL objects -- each is a record for a specific URL of an mp3 on the web.  For example, the first one returned by the call above is the song found at the URL:
 
     http://www.tumblr.com/audio_file/3570403182/tumblr_lhcmiouLWH1qzyrxg?plead=please-dont-download-this-or-our-lawyers-wont-let-us-host-audio
@@ -167,4 +171,46 @@ See [http://ex.fm/api](http://ex.fm/api) for details of what each of these retur
     >>> exfm.get_user_activity_with_verb('jm' 'love')
     >>> exfm.get_user_notifications('jm')
 
+### Search for songs by artist and title
 
+    >>> exfm.get_song_search_results('machaut')
+
+### Search for songs by tag
+
+Search for multiple tags with a string containing asterisk-separated terms.
+
+    >>> exfm.get_explore(tag='rock*pop')
+
+### Get songs by ID
+
+    >>> exfm.get_song('20szn')
+
+### See a graph representation of a song's loves
+
+    >>> exfm.get_song_graph('20szn')
+
+### Love and unlove a song
+
+    >>> password = 'JMsReallySecretPassw0rd'
+    >>> song_id = '20szn'
+    >>> exfm.love_song('jm', password, song_id)
+    >>> exfm.unlove_song('jm', password, song_id)
+
+### POSTs require authentication
+
+All POSTs require that you provide an exfm username and the password for that user.  Passwords are hashed by the client before being sent.
+
+### Get all loved songs from a URL
+
+    >>> url = 'http://www.awesometapes.com'
+    >>> exfm.get_loved_on_url(url)
+
+### Get songs that are trending on exfm
+
+    >>> exfm.get_trending()
+
+### Get songs from the Site of the Day, Mixtape of the Month, and Album of the Week
+
+    >>> exfm.get_sotd()
+    >>> exfm.get_motm()
+    >>> exfm.get_aotw()
