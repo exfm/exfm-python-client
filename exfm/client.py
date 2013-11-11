@@ -55,7 +55,7 @@ class ExfmClient(object):
         return self._get("/user/%s" % username)
 
     def get_user_loved(self, username, start=0, results=20):
-        return self._get("/user/%s/loved" % username),
+        return self._get("/user/%s/loved" % username,
             data={'start': start, 'results': results})
 
     def get_user_followers(self, username, start=0, results=20):
